@@ -1,0 +1,6 @@
+# Composer
+MVC/phpmini/myproject/vendor/
+
+# Node
+/node_modules/
+

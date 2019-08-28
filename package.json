@@ -1,0 +1,14 @@
+{
+  "name": "poo_mvc_en_php_escuelait",
+  "version": "1.0.0",
+  "description": "Documentos generados a partir del curso de MVC con PHP de EscuelaIT",
+  "main": "POO_PHP/index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@JosAndreu",
+  "license": "MIT",
+  "devDependencies": {
+    "bootstrap": "^4.3.1"
+  }
+}

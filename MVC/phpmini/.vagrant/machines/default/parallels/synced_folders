@@ -1,0 +1,1 @@
+{"parallels":{"/var/www/html":{"guestpath":"/var/www/html","hostpath":"/Users/andreu/Sites/POO_MVC_en_PHP_EscuelaIT/MVC/phpmini","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/andreu/Sites/POO_MVC_en_PHP_EscuelaIT/MVC/phpmini","disabled":false,"__vagrantfile":true}}}

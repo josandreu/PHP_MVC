@@ -1,0 +1,35 @@
+{
+    "name": "panique/mini",
+    "type": "project",
+    "description": "An extremely simple naked PHP application",
+    "keywords": ["skeleton", "boilerplate", "naked", "barebone", "application"],
+    "homepage": "https://github.com/panique/mini",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Panique",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/panique/mini/issues",
+        "source": "https://github.com/panique/mini"
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "phpmailer/phpmailer": "~6.0",
+        "twbs/bootstrap": "^4.3",
+        "league/plates": "3.*"
+    },
+    "require-dev": {
+        "kint-php/kint": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\" : "application"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
