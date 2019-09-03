@@ -10,7 +10,8 @@ class Questions extends Controller
     // veremos el contenido de la tabla preguntas
     public function showQuestions() {
         $questions = QuestionsModel::getAll();
-        $this->View->render('questions/showQuestions', array(
+
+        echo $this->View->render('questions/showQuestions', array(
             'questions' => $questions
         ));
     }

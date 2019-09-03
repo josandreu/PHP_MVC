@@ -21,11 +21,12 @@ class TemplatesFactory
 {
     private static $templates;
 
-    public function templates() {
+    public static function templates() {
         if (!self::$templates) {
             // la ruta es 'view/plates' simplemente por diferenciarlo de las plantillas antiguas
             // lo ideal sería que la ruta fuera '/view'
             self::$templates = new Engine(APP . 'view/plates');
+            self::$templates->addData(['titulo' => 'Mini + plates']);
         }
         return self::$templates;
     }

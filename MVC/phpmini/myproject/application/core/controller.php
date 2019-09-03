@@ -25,8 +25,13 @@ class Controller
     {
         // $this->openDatabaseConnection(); NO QUEREMOS INSTANCIAR LA BBDD DESDE AQUÍ, SINO DESDE LA CLASE Database.php
         // $this->loadModel(); TAMPOCO CARGAREMOS EL MODELO DESDE AQUÍ
-        $this->View = new View(); // esto nos permite tener acceso a este clase desde cualquier controlador y poder cargar las vistas, ya que todos heredan de Controller
-        Session::init(); // iniciamos una sesión
+
+        // huge template
+        // $this->View = new View(); // esto nos permite tener acceso a este clase desde cualquier controlador y poder cargar las vistas, ya que todos heredan de Controller
+
+        // plates template
+        $this->View = TemplatesFactory::templates(); // plates template
+        Session::init(); // iniciamos una sesión a través de la clase Session
     }
 
     /**

@@ -37,6 +37,10 @@ class Problem extends Controller
         require APP . 'view/problem/index.php';
         require APP . 'view/_templates/footer.php';*/
 
-        $this->View->render('problem/index', array('msg' => $this->msg ));
+        // huge template
+        // $this->View->render('problem/index', array('msg' => $this->msg ));
+
+        // plates template
+        echo $this->View->render('problem/index', array('msg' => $this->msg ));
     }
 }
