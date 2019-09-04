@@ -74,8 +74,18 @@ class QuestionsModel
 
     public static function edit($data) {
         $conn = Database::getInstance()->getDb();
-        if (empty($data['asunto']) || empty($data['cuerpo']) || empty($data['slug'])) {
-            Session::add('feedback_negative', "Error al editar, falta de completar algún campo");
+        if (empty($data['asunto']) && empty($data['cuerpo'])) {
+            Session::add('feedback_negative', "Error al editar, falta de completar el asunto");
+            Session::add('feedback_negative', "Error al editar, falta de completar el cuerpo");
+            return false;
+        } else if (empty($data['cuerpo'])) {
+            Session::add('feedback_negative', "Error al editar, falta de completar el cuerpo");
+            return false;
+        } else if (empty($data['slug'])) {
+            Session::add('feedback_negative', "Error al editar, falta de completar el slug");
+            return false;
+        } else if (empty($data['asunto'])) {
+            Session::add('feedback_negative', "Error al editar, falta de completar el asunto");
             return false;
         } else {
             $sql = "UPDATE pregunta SET asunto = :asunto, cuerpo = :cuerpo WHERE slug = :slug";

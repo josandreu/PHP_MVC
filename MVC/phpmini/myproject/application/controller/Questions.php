@@ -19,7 +19,8 @@ class Questions extends Controller
     public function insert() {
         if (!$_POST) {
             // si no estamos recibiendo nada por POST ... que muestre el formulario
-            $this->View->render('questions/formQuestions');
+            // $this->View->render('questions/formQuestions');
+            echo $this->View->render('questions/formQuestions');
         } else {
             // y si recibimos datos, los insertamos
             // pero primero, comprobación de $_POST, por si hubiera alguna manipulación en el formulario
@@ -33,9 +34,10 @@ class Questions extends Controller
                 'cuerpo' => $_POST['cuerpo']
             );
             if (QuestionsModel::insert($data)) {
-                $this->View->render('questions/insertQuestions');
+                // $this->View->render('questions/insertQuestions');
+                echo $this->View->render('questions/insertQuestions');
             } else {
-                $this->View->render('questions/formQuestions', array(
+                echo $this->View->render('questions/formQuestions', array(
                     'errores' => array('Error al insertar'),
                     'data' => $_POST // pasamos el contenido del formulario
                     ));
@@ -55,35 +57,36 @@ class Questions extends Controller
         } else {
             // si no recibo datos del formulario
             if (!$_POST) {
-                d($slug); // 192.168.33.44/questions/edit/$slug
-                d($_GET['slugURL']); // 192.168.33.44/questions/edit/$slug?slugURL=...
-                $data = QuestionsModel::getOneAsObject($slug); // para mostrarlo en los input
-                if ($data) {
-                    $this->View->render('questions/formQuestions', array(
-                        'data' => get_object_vars($data), // para convertirlo en un array asociativo que contiene las propiedades del objeto
+                // d($slug); // 192.168.33.44/questions/edit/$slug
+                // d($_GET['slugURL']); // 192.168.33.44/questions/edit/$slug?slugURL=...
+                $dato = QuestionsModel::getOneAsObject($slug); // para mostrarlo en los input
+                if ($dato) {
+                    //echo $this->View->render('layout');
+                    echo $this->View->render('questions/formQuestions', array(
+                        'dato' => get_object_vars($dato), // para convertirlo en un array asociativo que contiene las propiedades del objeto
                         'resultAsArray' => $resultAsArray,
                         'accion' => 'editar'
                     ));
                 } else {
                     // si no existe la pregunta con el slug de la url...
-                    header("location: /questions/showQuestions");
+                    header('location: home/index');
                 }
             } else {
-                // si recibimos datos del formulario, guardamos los datos recibidos del formulario en un array
-                $data = array(
+                // si recibimos datos del formulario (estamos ya editando), guardamos los datos recibidos del formulario en un array
+                $dato = array(
                     'asunto' => (isset($_POST['asunto'])) ? $_POST['asunto'] : "",
                     'cuerpo' => (isset($_POST['cuerpo'])) ? $_POST['cuerpo'] : "",
                     'slug' => $slug // lo recibimos mediante el parámetro de la url -> 192.168.33.44/questions/edit/$slug
                 );
                 // mando los datos al modelo para actualizarlos
-                if (QuestionsModel::edit($data)) {
+                if (QuestionsModel::edit($dato)) {
                     // $this->View->render('questions/editQuestions');
                     header('location: /questions/showQuestions');
                 } else {
-                    $this->View->render('questions/formQuestions', array(
+                    echo $this->View->render('questions/formQuestions', array(
                         // ESTO HABRÍA QUE CAMPBIARLO / DEPURARLO
                         'errores' => array('Error al editar'),
-                        'data' => $_POST,
+                        'dato' => $_POST,
                         'resultAsArray' => $resultAsArray,
                         'accion' => 'editar'
                     ));

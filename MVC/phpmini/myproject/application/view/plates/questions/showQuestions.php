@@ -1,6 +1,6 @@
 <?= $this->layout('layout')?>
 <div class="container">
-<!--    --><?php //$this->renderFeedbackMessages() ?>
+    <?= $this->insert('partials/feedback') ?>
     <h2>Todas las preguntas</h2>
     <?php if (count($questions) == 0) : ?>
         <h4>No se encuentran preguntas en la base de datos</h4>
