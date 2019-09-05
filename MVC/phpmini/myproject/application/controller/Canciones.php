@@ -2,6 +2,7 @@
 
 
 use App\core\Controller;
+use App\model\Model;
 
 class Canciones extends Controller
 {
@@ -23,20 +24,22 @@ class Canciones extends Controller
         $canciones = $model->getAllSongs();
         // de esta forma, decimos qué vista ha de cargar
         // y pasamos en un array los datos necesarios que la vista espera
-        $this->View->render('canciones/listar', array(
+        echo $this->View->render('canciones/listar', array(
             'canciones' => $canciones,
             'titulo' => 'Listado de canciones'
         ));
     }
 
     public function ver($id = 0) {
+        $conn = \App\core\Database::getInstance()->getDb();
         $id = (int) $id; // hacemos un casting a int, forzamos que sea un entero
         if ($id == 0) {
             // nos redirige
           header('location: /canciones/listar');
         } else {
-            $cancion = $this->model->getSong($id);
-            $this->View->render('canciones/ver', array(
+            $model = new Model($conn);
+            $cancion = $model->getSong($id);
+            echo $this->View->render('canciones/ver', array(
                 'cancion' => $cancion,
                 'titulo' => $cancion->track
             ));
