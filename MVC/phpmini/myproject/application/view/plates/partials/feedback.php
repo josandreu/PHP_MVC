@@ -3,12 +3,14 @@
 ?>
 
 <?php if (!is_null(Session::get('feedback_negative')) && count(Session::get('feedback_negative')) > 0) : ?>
-    <div class="bg-danger p-3 mb-2 rounded">
-        <ul class="mb-0">
-            <?php foreach (Session::get('feedback_negative') as $error) : ?>
-                <li class="text-light"><?= $error ?></li>
-            <?php endforeach; ?>
-        </ul>
+    <div class="error-feedback">
+        <div class="bg-danger p-3 mb-2 rounded">
+            <ul class="mb-0">
+                <?php foreach (Session::get('feedback_negative') as $error) : ?>
+                    <li class="text-light"><?= $error ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
 <?php endif ?>
 

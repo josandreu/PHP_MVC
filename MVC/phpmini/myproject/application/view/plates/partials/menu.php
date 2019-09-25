@@ -7,4 +7,5 @@
     <a href="<?php echo URL; ?>canciones">canciones</a>
     <a href="<?php echo URL; ?>login">Login</a>
     <a href="<?php echo URL; ?>login/salir">Salir</a>
+    <a href="<?php echo URL; ?>privateZone/index">Zona privada</a>
 </div>

@@ -36,4 +36,9 @@ $(function() {
         });
     }
 
+    // para ocultar automáticamente los mensajes de error
+    setTimeout(function() {
+        $('.error-feedback').hide(1000);
+    }, 3000);
+
 });

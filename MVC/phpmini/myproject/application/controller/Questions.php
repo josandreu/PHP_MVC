@@ -2,6 +2,7 @@
 
 //namespace App\controller;
 
+use App\core\Auth;
 use App\core\Controller;
 use App\model\QuestionsModel;
 
@@ -17,6 +18,7 @@ class Questions extends Controller
     }
 
     public function insert() {
+        Auth::checkAuthentication(); // solo podrán insertar preguntas los usuarios logueados
         if (!$_POST) {
             // si no estamos recibiendo nada por POST ... que muestre el formulario
             // $this->View->render('questions/formQuestions');
@@ -70,6 +72,7 @@ class Questions extends Controller
                 } else {
                     // si no existe la pregunta con el slug de la url...
                     header('location: home/index');
+                    exit();
                 }
             } else {
                 // si recibimos datos del formulario (estamos ya editando), guardamos los datos recibidos del formulario en un array
@@ -82,6 +85,7 @@ class Questions extends Controller
                 if (QuestionsModel::edit($dato)) {
                     // $this->View->render('questions/editQuestions');
                     header('location: /questions/showQuestions');
+                    exit();
                 } else {
                     echo $this->View->render('questions/formQuestions', array(
                         // ESTO HABRÍA QUE CAMPBIARLO / DEPURARLO
