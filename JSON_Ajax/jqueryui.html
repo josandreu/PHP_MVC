@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/jquery-ui/themes/base/all.css">
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            function log( message ) {
+                $( "<div>" ).text( message ).prependTo( "#log" );
+                $( "#log" ).scrollTop( 0 );
+            }
+            $( "#cantantes" ).autocomplete({
+                source: "busca-bbdd.php",
+                minLength: 3,
+                select: function( event, ui ) {
+                    console.log(ui.item);
+                    log( "Seleccionaste: " + ui.item.artist + " con valor " + ui.item.track);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-4 ui-widget">
+        <h3>Buscar un término</h3>
+        <div class="form-group w-50">
+            <label for="cantantes">Usuarios: </label>
+            <input class="form-control" id="cantantes">
+        </div>
+        <div class="resultado ui-widget mt-4">
+            <p>Resultado:</p>
+            <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+        </div>
+    </div>
+</body>
+</html>
