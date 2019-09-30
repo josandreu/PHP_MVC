@@ -12,6 +12,9 @@
                 <p><?= $question->cuerpo ?></p>
                 <footer>
                     <a href="/questions/edit/<?= $question->slug ?>?slugURL=<?= $question->slug ?>">[Editar]</a>
+                    <!-- pasamos el id de la pregunta para saber cuantas respuesta tiene esa pregunta, este enlace tendrá comportamiento AJAX, que programaremos desde application.js -->
+                    <a class="link-how-many" href="/questions/howManyAnswers/<?= $question->id_pregunta ?>">[Cuantas respuestas<span></span>]</a>
+                    <a href="/questions/sendAnswer/<?= $question->slug ?>">[ Responder ]</a>
                 </footer>
             </article>
         <?php endforeach; ?>

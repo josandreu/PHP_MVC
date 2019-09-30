@@ -107,4 +107,48 @@ class QuestionsModel
             return false;
         }
     }
+
+    public static function howManyAnswers($id) {
+        $id = (int) $id; // forzamos a que sea un entero
+        $sql = "SELECT COUNT(*) as num FROM respuesta WHERE id_pregunta = :id";
+        $conn = Database::getInstance()->getDb();
+        $query = $conn->prepare($sql);
+        $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $answers = $query->fetch();
+        return $answers->num;
+    }
+
+    public static function insertAnswer($slug, $data) {
+        $conn = Database::getInstance()->getDb();
+        // obtengo la pregunta a la que se desea responder
+        $question = self::getOneAsObject($slug);
+        if(!$question){
+            return false;
+        }
+        //valido la respuesta
+        if(empty($data["answer"])){
+            Session::add('feedback_negative', "No he recibido la respuesta");
+            return false;
+        }
+        if(strlen($data["answer"]) < 10){
+            Session::add('feedback_negative', "La respuesta es demasiado corta");
+            Session::add('feedback_negative', "Respuestas válidas a partir de 10 caracteres");
+            return false;
+        }
+        $sql = 'INSERT INTO respuesta (id_pregunta, id_usuario, respuesta) VALUES (:id_pregunta, :id_usuario, :respuesta)';
+        $query = $conn->prepare($sql);
+        $params = array(
+            ':id_pregunta' => $question->id_pregunta,
+            ':id_usuario' => Session::get('user_id'),
+            ':respuesta' => $data['answer']
+        );
+        $query->execute($params);
+        $count = $query->rowCount();
+        if ($count == 1) {
+            //$_SESSION["feedback_positive"][] = "Creado correctamente";
+            return $conn->lastInsertId();
+        }
+        return false;
+    }
 }

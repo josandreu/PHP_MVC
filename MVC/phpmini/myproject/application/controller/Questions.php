@@ -99,4 +99,22 @@ class Questions extends Controller
 
         }
     }
+
+    public function howManyAnswers($id = 0) {
+        $number = QuestionsModel::howManyAnswers($id);
+        echo $this->View->render('questions/howManyAnswers', array('number' => $number));
+    }
+
+    public function sendAnswer($slug = '') {
+        Auth::checkAuthentication(); // solo podrán insertar respuestas los usuarios logueados
+        // si no recibimos datos GET (a través de la URL) mostramos el formulario
+        if (!$_POST) {
+            $question = QuestionsModel::getOneAsObject($slug); // para mostrar los datos de la pregunta y pasarlos a la vista
+            // $question = QuestionsModel::getOneAsArray($slug)[0]; // sería lo mismo que arriba, pero accedemos a la posición 0 al ser un array
+            echo $this->View->render('questions/formAnswer', array('question' => $question)); // mostramos el formulario de respuesta
+        } else {
+            $res = QuestionsModel::insertAnswer($slug, $_POST);
+            echo $this->View->render('questions/answerInserted', array('answer' => $res)); // pasamos a la vista el resultado de insertar una nueva respuesta
+        }
+    }
 }

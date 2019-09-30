@@ -18,7 +18,6 @@ $(function() {
     if ($('#javascript-ajax-button').length !== 0) {
 
         $('#javascript-ajax-button').on('click', function(){
-
             // send an ajax-request to this URL: current-server.com/songs/ajaxGetStats
             // "url" is defined in views/_templates/footer.php
             $.ajax(url + "/songs/ajaxGetStats")
@@ -41,4 +40,34 @@ $(function() {
         $('.error-feedback').hide(1000);
     }, 3000);
 
+    $('.link-how-many').on('click', function (e) {
+        e.preventDefault();
+        const link = $(this); // el enlace
+        let url = link.attr('href'); // obtenemos la ruta del enlace
+        console.log(url);
+        link .children().load(url); // cargamos el contenido de la url en el span
+    });
+
+    // vamos a mostrar el contenido de la vista answerInserted en la misma página del formulario formAnswer por AJAX
+    // esto ocurrirá cuando se envie el formulario (evento submit)
+    // se trata de en lugar de que el form envie los datos por post de la manera tradicional, los vamos a enviar nosotros por AJAX
+    /*
+    ES EQUIVALENTE A:
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: success,
+            dataType: dataType
+        });
+     */
+    $('#formAnswer').on('submit', function (e) {
+        e.preventDefault();
+        const form = $(this);
+        const url = form.attr('action'); // obtenemos la url del action
+        // url es donde mandamos los datos, form.serialize son los datos, y luego viene la funcion que se ejecuta una vez se realiza todo
+        $.post(url, form.serialize(), function (serverResponse) {
+            $('.mensajef').html(serverResponse);
+        })
+    })
 });
