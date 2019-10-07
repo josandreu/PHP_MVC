@@ -117,4 +117,38 @@ class Questions extends Controller
             echo $this->View->render('questions/answerInserted', array('answer' => $res)); // pasamos a la vista el resultado de insertar una nueva respuesta
         }
     }
+
+    public function sendAnswerJSON($slug = '') {
+        Auth::checkAuthentication(); // solo podrán insertar respuestas los usuarios logueados
+        $question = QuestionsModel::getOneAsObject($slug); // para mostrar los datos de la pregunta y pasarlos a la vista
+        // si no recibimos datos GET (a través de la URL) mostramos el formulario
+        if (!$_POST) {
+            $numberOfAnswers = QuestionsModel::howManyAnswers($question->id_pregunta); // nº de respuestas asociadas a la pregunta
+            // mostramos el formulario de respuesta
+            echo $this->View->render('questions/formAnswerJSON', array(
+                'question' => $question,
+                'numberOfAnswers' => $numberOfAnswers
+                ));
+        } else {
+            $res = QuestionsModel::insertAnswer($slug, $_POST);
+            $number = QuestionsModel::howManyAnswers($question->id_pregunta);
+            // pasamos a la vista el resultado de insertar una nueva respuesta, esta vista es un JSON
+            echo $this->View->render('questions/answerInsertedJSON', array(
+                'answer' => $res,
+                'number' => $number
+                ));
+        }
+    }
+
+    public function getAnswersJSON($questionId) {
+        $answers = QuestionsModel::getOnlyAnswers($questionId);
+        echo $this->View->render('questions/getAnswersJSON', array('answers' => $answers));
+    }
+
+    public function getAnswersJSONHandlebars($questionId) {
+        $answers = QuestionsModel::getAnswers($questionId);
+        echo $this->View->render('questions/getAnswersJSONHbar', array('answers' => $answers));
+    }
+
+
 }

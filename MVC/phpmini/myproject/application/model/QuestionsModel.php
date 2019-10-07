@@ -4,7 +4,9 @@ namespace App\model;
 
 use App\core\Database;
 use App\core\Session;
+use App\libs\Helper;
 use App\libs\Strings;
+use PDO;
 
 class QuestionsModel
 {
@@ -16,7 +18,6 @@ class QuestionsModel
     }
 */
 
-
     public static function getAll() {
         $conn = Database::getInstance()->getDb();
         $query = $conn->prepare("SELECT * FROM pregunta");
@@ -24,6 +25,7 @@ class QuestionsModel
         return $query->fetchAll(); // DEVOLVEMOS TODOS LOS REGISTROS ENCONTRADOS
     }
 
+    // obtenemos el nº de preguntas
     public static function getOneAsObject($data) {
         $conn = Database::getInstance()->getDb();
         $query = $conn->prepare("SELECT * FROM pregunta WHERE slug = :slug");
@@ -32,6 +34,7 @@ class QuestionsModel
         return $query->fetch(); // obtenemos la siguiente fila completa, lo usamos para insertar los datos en un input
     }
 
+    // obtenemos el nº de preguntas
     public static function getOneAsArray($data) {
         $conn = Database::getInstance()->getDb();
         $query = $conn->prepare("SELECT * FROM pregunta WHERE slug = :slug");
@@ -112,11 +115,13 @@ class QuestionsModel
         $id = (int) $id; // forzamos a que sea un entero
         $sql = "SELECT COUNT(*) as num FROM respuesta WHERE id_pregunta = :id";
         $conn = Database::getInstance()->getDb();
-        $query = $conn->prepare($sql);
-        $query->bindValue(':id', $id, \PDO::PARAM_INT);
-        $query->execute();
-        $answers = $query->fetch();
-        return $answers->num;
+        if($id) {
+            $query = $conn->prepare($sql);
+            $query->bindValue(':id', $id, \PDO::PARAM_INT);
+            $query->execute();
+            $answers = $query->fetch();
+            return $answers->num;
+        } else return false;
     }
 
     public static function insertAnswer($slug, $data) {
@@ -150,5 +155,37 @@ class QuestionsModel
             return $conn->lastInsertId();
         }
         return false;
+    }
+
+    public static function getOnlyAnswers($questionId) {
+        $conn = Database::getInstance()->getDb();
+        $questionId = (int) $questionId;
+        if($questionId) {
+            $sql = "SELECT respuesta FROM respuesta WHERE id_pregunta = :questionId";
+            //echo Helper::debugPDO($sql, array($questionId));
+            $query = $conn->prepare($sql);
+            $query->bindValue(':questionId', $questionId, PDO::PARAM_INT);
+            $query->execute();
+            return $answers = $query->fetchAll();
+        } else {
+            Session::add('feedback_negative', "No existen respuestas para esta pregunta");
+            return false;
+        }
+    }
+
+    public static function getAnswers($questionId) {
+        $conn = Database::getInstance()->getDb();
+        $questionId = (int) $questionId;
+        if($questionId) {
+            $sql = "SELECT id_respuesta, id_pregunta, id_usuario, respuesta FROM respuesta WHERE id_pregunta = :questionId";
+            //echo Helper::debugPDO($sql, array($questionId));
+            $query = $conn->prepare($sql);
+            $query->bindValue(':questionId', $questionId, PDO::PARAM_INT);
+            $query->execute();
+            return $answers = $query->fetchAll();
+        } else {
+            Session::add('feedback_negative', "No existen respuestas para esta pregunta");
+            return false;
+        }
     }
 }
