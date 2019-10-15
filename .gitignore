@@ -4,4 +4,7 @@ MVC/phpmini/myproject/vendor/
 # Node
 /node_modules/
 
+# Parallels
+MVC/phpmini/.vagrant/machines/default/parallels/*
+
 info.php

@@ -1,6 +1,6 @@
 <?php use App\core\Session; ?>
 
-<?php $this->layout('layout')?>;
+<?php $this->layout('layout')?>
 
 <div class="container">
     <h2>Login correcto</h2>
