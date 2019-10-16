@@ -1,10 +1,15 @@
 # Composer
 MVC/phpmini/myproject/vendor/
+Dice_Dependency_Injection/vendor/
 
 # Node
 /node_modules/
 
 # Parallels
 MVC/phpmini/.vagrant/machines/default/parallels/
+*/parallels
+*/parallels/
 
 info.php
+
+*.idea

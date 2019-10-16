@@ -1,0 +1,15 @@
+{
+    "name": "andreu/dice_dependency_injection",
+    "description": "A minimalist Dependency injection container (DIC) for PHP.",
+    "require": {
+        "level-2/dice": "^4.0",
+        "kint-php/kint": "^3.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose Antonio Andreu",
+            "email": "jose.andreu.r@gmail.com"
+        }
+    ]
+}
