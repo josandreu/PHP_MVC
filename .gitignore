@@ -8,8 +8,10 @@ Dice_Dependency_Injection/vendor/
 # Parallels
 MVC/phpmini/.vagrant/machines/default/parallels/
 */parallels
-*/parallels/
+**/parallels/
 
 info.php
 
+# PhpStorm
 *.idea
+/.idea/
